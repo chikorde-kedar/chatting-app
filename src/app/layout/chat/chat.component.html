@@ -1,0 +1,53 @@
+<div #scrollMe class="chat-panel card card-default" [@routerTransition]>
+  <div class="card-header">
+      <i class="fa fa-comments fa-fw"></i>
+      Chat
+  </div>
+  <!-- /.panel-heading -->
+  <div class="card-body">
+      <ul class="chat">
+        <li *ngFor="let c of chats">
+            <div class="left clearfix" *ngIf="c.nickname===msgData.nickname; else rightchat">
+              <span class="chat-img pull-left">
+                <img src="http://placehold.it/50/55C1E7/fff&text=ME" alt="User Avatar" class="img-circle" />
+              </span>
+              <div class="chat-body clearfix">
+                  <div class="header">
+                      <strong class="primary-font">{{ c.nickname }}</strong> <small class="pull-right text-muted">
+                          <span class="glyphicon glyphicon-time"></span>{{ c.updated_at | date: 'medium' }}</small>
+                  </div>
+                  <p>{{ c.message }}</p>
+              </div>
+            </div>
+            <ng-template #rightchat>
+              <div class="right clearfix">
+                <span class="chat-img pull-right">
+                  <img src="http://placehold.it/50/FA6F57/fff&text=U" alt="User Avatar" class="img-circle" />
+                </span>
+                <div class="chat-body clearfix">
+                    <div class="header">
+                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>{{ c.updated_at | date: 'medium' }}</small>
+                        <strong class="pull-right primary-font">{{ c.nickname }}</strong>
+                    </div>
+                    <p>{{ c.message }}</p>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+      </ul>
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer">
+      <div class="input-group">
+          <input type="hidden" [(ngModel)]="msgData.room" name="room" />
+          <input type="hidden" [(ngModel)]="msgData.nickname" name="nickname" />
+          <input id="btn-input" type="text" [(ngModel)]="msgData.message" class="form-control input-sm" placeholder="Type your message here...">
+          <span class="input-group-btn">
+              <button class="btn btn-warning btn-sm" id="btn-chat" (click)="sendMessage();" (keydown)="keyDownFunction($event)">
+                  Send
+              </button>
+          </span>
+      </div>
+  </div>
+  <!-- /.card-footer -->
+</div>
